@@ -1,8 +1,26 @@
+import React from 'react';
 import OrderView from './Order.jsx'
+import Feedback from './Feedback.jsx'
 
 const App = () => Page()
 
 const Page = () => {
+
+  const textoOK = 'Já chegou'
+  const textoNOK = 'Não chegou ainda'
+  const funcaoOK = () => alert('Obrigado por confirmar a entrega')
+  const funcaoNOK = () => alert('Vamos verificar o que aconteceu')
+
+  const componenteFeedback = (
+    
+      <Feedback 
+        textoOK={textoOK} 
+        textoNOK={textoNOK} 
+        funcaoOK={funcaoOK} 
+        funcaoNOK={funcaoNOK}
+      />
+
+  )
 
   return (
     <>
@@ -16,12 +34,16 @@ const Page = () => {
             {icon: "laptop", date: "22/01/2021", name: "Notebook", text: "Notebook Dell - 8 GB - i5"}
           ]}
 
+          componenteFeedback = {componenteFeedback}
+
         />
 
       </div>
+      
     </>
   )
 
 }
+
 
 export default App

@@ -20,6 +20,8 @@ function Order(props) {
                         <h3 className="text-center">{props.name}</h3>
                         <p className="text-center">{props.text}</p>
 
+                        {props.componenteFeedback}
+
                     </div>
 
                 </div>
@@ -42,20 +44,16 @@ function OrderView(props) {
 
             <div className="row">
 
-                { 
-
-                    (props.orders).map(order => (
-
-                        <Order
-                            icon={order.icon}
-                            date={order.date}
-                            name={order.name}
-                            text={order.text}
-                        />
-
-                    ))
-
-                }
+                {props.orders.map(order => (
+                    <Order
+                    key={order.id}
+                    icon={order.icon}
+                    date={order.date}
+                    name={order.name}
+                    text={order.text}
+                    componenteFeedback={props.componenteFeedback}
+                    />
+                ))}
 
             </div>
 
