@@ -1,4 +1,6 @@
 import React from 'react'
+import Hippo from './Hippo'
+import EstacaoClimatica from './EstacaoClimatica'
 
 /* Enum 'estacao'
 
@@ -51,30 +53,54 @@ class App extends React.Component {
     longo do tempo. O estado é usado para armazenar informações que, quando alteradas, 
     causam a re-renderização do componente.
 
+  */
+
+  state = {
+
+    latitude: null,
+    longitude: null,
+    estacao: null,
+    data: null,
+    icone: null,
+    mensagemDeErro: null
+
+  }
+
+  /* 
+  
+  - Quando não é feito nada além de inicializar o estado do component em um construtor, pode ser 
+    uma boa ideia, simplesmente definir o estado sem um construtor.
+  
+  */
+
+  /*
+
   - O constructor() é o primeiro método a ser chamado quando a instância de um componente de classe é criada. 
     Aqui, ele é utilizado para inicializar o estado do componente. A função super(props) é chamada para garantir 
     que o componente React seja inicializado corretamente, recebendo as propriedades (props) que foram passadas 
     para ele. Dentro do constructor(), é comum inicializar o estado com valores padrão. No seu código, o estado 
     é inicializado da seguinte forma:
   
-  */
+ 
 
-  constructor(props) {
+    constructor(props) {
 
-    super(props)
+      super(props)
 
-    this.state = {
+      this.state = {
 
-      latitude: null,
-      longitude: null,
-      estacao: null,
-      data: null,
-      icone: null,
-      mensagemDeErro: null
+        latitude: null,
+        longitude: null,
+        estacao: null,
+        data: null,
+        icone: null,
+        mensagemDeErro: null
+
+      }
 
     }
 
-  }
+   */
 
   obterLocalizacao = () => {
 
@@ -143,34 +169,31 @@ class App extends React.Component {
   */
 
   render() {
-
-    const text_coord = (this.state.estacao === null) ? 
-        "Clique no botão para saber a sua estação" : 
-        `Coordenadas: ${this.state.latitude}, ${this.state.longitude}. Data: ${this.state.data}`
     
     return (
 
       <>
         <div className="container mt-2 text-center">
           <div className='row'>
-            <i className={`fa-hippo fas fa-10x`}></i>
+            <div className='col-12'>
+
+              <Hippo/>
+            
+            </div>
           </div>
           <div className='row justify-content-center'>
-            <div className='col-sm-4 col-lg-6 col-xxl-12'>
-              <div className='card'>
-                <div className="card-body">
-                  <div className='d-flex align-items-center border rounded mb-2'>
-                    <i className={`fa-${this.state.icone} fas fa-10x`}></i>
-                    <h3 className='fs-1'>{this.state.estacao}</h3>
-                  </div>
-                  <div>
-                    <p className='text-center'>
-                      {text_coord}
-                    </p>
-                    <button type="button" onClick={() => this.obterLocalizacao()} className='btn btn-outline-primary w-100'>Qual a minha estação?</button>
-                  </div>
-                </div>
-              </div>
+            <div className='col-sm-12 col-lg-6 col-xxl-4'>
+
+              <EstacaoClimatica 
+
+                latitude={this.state.latitude}
+                longitude={this.state.longitude}
+                estacao={this.state.estacao}
+                icone={this.state.icone}
+                obterLocalizacao={this.obterLocalizacao}
+
+              />
+
             </div>
           </div>
         </div>
