@@ -1,6 +1,7 @@
 import React from 'react'
 import Hippo from './Hippo'
 import EstacaoClimatica from './EstacaoClimatica'
+import Loading from './Loading'
 
 /* Enum 'estacao'
 
@@ -60,7 +61,6 @@ class App extends React.Component {
     latitude: null,
     longitude: null,
     estacao: null,
-    data: null,
     icone: null,
     mensagemDeErro: null
 
@@ -110,10 +110,8 @@ class App extends React.Component {
 
         const new_date = new Date()
         const estacao = this.obterEstacao(new_date, position.coords.latitude)
-        const formatter = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' });
 
         const new_state = {
-          data: formatter.format(new_date),
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           estacao: estacao.nome,
@@ -168,14 +166,20 @@ class App extends React.Component {
 
   */
 
+  componentDidMount() {
+
+    this.obterLocalizacao()
+
+  }
+
   render() {
     
     return (
 
       <>
         <div className="container mt-2 text-center">
-          <div className='row'>
-            <div className='col-12'>
+          <div className='row justify-content-center'>
+            <div className='col-sm-12 col-lg-6 col-xxl-4'>
 
               <Hippo/>
             
@@ -184,15 +188,35 @@ class App extends React.Component {
           <div className='row justify-content-center'>
             <div className='col-sm-12 col-lg-6 col-xxl-4'>
 
-              <EstacaoClimatica 
+              { 
 
-                latitude={this.state.latitude}
-                longitude={this.state.longitude}
-                estacao={this.state.estacao}
-                icone={this.state.icone}
-                obterLocalizacao={this.obterLocalizacao}
+                (!this.state.mensagemDeErro && !this.state.latitude) ?
 
-              />
+                  <Loading
+                  
+                    mensagem="Por favor, responda à solicitação de localização..."
+
+                  />
+
+                : this.state.mensagemDeErro ?
+
+                  <p className='border rounded p-2 fs-1 text-center p-5'>
+                    É preciso dar permissão para localização...
+                  </p>
+
+                :
+
+                  <EstacaoClimatica 
+
+                    latitude={this.state.latitude}
+                    longitude={this.state.longitude}
+                    estacao={this.state.estacao}
+                    icone={this.state.icone}
+                    obterLocalizacao={this.obterLocalizacao}
+
+                  />
+
+              }
 
             </div>
           </div>

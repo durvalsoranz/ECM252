@@ -9,9 +9,11 @@ export default class EstacaoClimatica extends Component {
     }
 
     componentDidMount() {
+        
         this.timer = setInterval(() => {
-            this.setState({data: new Date().toLocaleTimeString()})
+            this.setState({data: new Date().toLocaleTimeString('en-US')})
         }, 1000)
+
     }
 
     componentWillUnmount() {
